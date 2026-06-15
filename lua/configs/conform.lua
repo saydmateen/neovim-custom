@@ -1,14 +1,28 @@
 local options = {
   formatters_by_ft = {
     lua = { "stylua" },
-    css = { "prettier" },
+    -- Web
     html = { "prettier" },
+    css = { "prettier" },
+    javascript = { "prettier" },
+    typescript = { "prettier" },
+    javascriptreact = { "prettier" },
+    typescriptreact = { "prettier" },
+    json = { "prettier" },
+    jsonc = { "prettier" },
+    yaml = { "prettier" },
+    markdown = { "prettier" },
+    -- Rust
+    rust = { "rustfmt" },
+    -- Python
+    python = { "ruff_format" },
+    -- C#
+    cs = { "csharpier" },
   },
 
   format_on_save = {
-    -- These options will be passed to conform.format()
-     timeout_ms = 500,
-     lsp_fallback = true,
+    timeout_ms = 500,
+    lsp_format = "fallback",
   },
 }
 

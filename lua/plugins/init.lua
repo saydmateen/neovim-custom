@@ -1,5 +1,17 @@
 return {
   {
+    "L3MON4D3/LuaSnip",
+    build = "make install_jsregexp",
+  },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = function(_, opts)
+      opts.view = opts.view or {}
+      opts.view.preserve_window_proportions = false
+      return opts
+    end,
+  },
+  {
     "stevearc/conform.nvim",
     event = 'BufWritePre',
     opts = require "configs.conform",
@@ -9,6 +21,18 @@ return {
     config = function()
       require "configs.lspconfig"
     end,
+  },
+  {
+    "kawre/leetcode.nvim",
+    lazy = false,
+    build = ":TSUpdate html",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      lang = "python3",
+    },
   },
   {
     "MeanderingProgrammer/render-markdown.nvim",
@@ -23,6 +47,8 @@ return {
       opts.ensure_installed = opts.ensure_installed or {}
       opts.auto_install = true
       vim.list_extend(opts.ensure_installed, {
+        -- Lua (config)
+        "lua",
         -- Web
         "html", "css", "javascript", "typescript", "tsx",
         "json", "jsonc", "yaml", "toml",

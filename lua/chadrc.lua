@@ -7,32 +7,33 @@ local M = {}
 
 M.base46 = {
   theme = "ayu_dark",
+
+  hl_override = {
+    IblScopeChar = { fg = "#36A3D9" },
+  },
 }
 
 M.ui = {
-  tabufline = {
-    enabled = true,
-    lazyload = false,
-    bufwidth = 36,
-    modules = {
-      treeOffset = function()
-        local w = 0
-        for _, win in pairs(vim.api.nvim_tabpage_list_wins(0)) do
-          if vim.bo[vim.api.nvim_win_get_buf(win)].ft == "NvimTree" then
-            w = vim.api.nvim_win_get_width(win)
-            break
-          end
-        end
-        if w == 0 then return "" end
+  statusline = {
+    theme = "minimal",
+    separator_style = "round",
+  },
 
-        local name = vim.fn.fnamemodify(vim.fn.getcwd(), ":t")
-        local pad = math.max(0, math.floor((w - #name) / 2))
-        local label = string.rep(" ", pad) .. name
-        label = label .. string.rep(" ", math.max(0, w - #label))
+  tabufline = { enabled = false },
+}
 
-        return "%#NvimTreeTitle#" .. label .. "%#NvimTreeWinSeparator#" .. "│"
-      end,
-    },
+M.mason = {
+  pkgs = {
+    -- LSP servers
+    "pyright",
+    "omnisharp",
+    "taplo",
+    -- Formatters
+    "stylua",
+    "prettier",
+    "rustfmt",
+    "ruff",
+    "csharpier",
   },
 }
 

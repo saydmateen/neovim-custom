@@ -12,7 +12,6 @@ if not vim.uv.fs_stat(lazypath) then
 end
 
 vim.opt.rtp:prepend(lazypath)
-
 local lazy_config = require "configs.lazy"
 
 -- load plugins
@@ -27,12 +26,13 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- load theme
+-- load theme (compile cache on first run or after wipe)
+if not vim.uv.fs_stat(vim.g.base46_cache) then
+  require("base46").load_all_highlights()
+end
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
 
--- NvimTree title in tabline (seablue fg, tree bg)
-vim.api.nvim_set_hl(0, "NvimTreeTitle", { fg = "#169AC9", bg = "#080808", bold = true })
 
 require "options"
 require "autocmds"
@@ -101,12 +101,6 @@ vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = tru
 
 -- Hover documentation
 vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true })
-
--- Rename symbol
-vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { noremap = true, silent = true })
-
--- Code actions
-vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { noremap = true, silent = true })
 
 -- Render markdown
 vim.keymap.set('n', '<leader>md', '<cmd>RenderMarkdown toggle<CR>', { noremap = true, silent = true })
